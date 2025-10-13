@@ -13,8 +13,8 @@ const sampleContacts = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 // Defines the background color used for the cards and input fields for visual consistency
-const CARD_BG = '#0C111D';
-const APP_BG = 'bg-gray-950';
+const CARD_BG = '#000000';
+const APP_BG = 'bg-black';
 
 /**
  * Renders the individual contact card.
@@ -22,7 +22,7 @@ const APP_BG = 'bg-gray-950';
  */
 const ContactCard = ({ contact }) => {
     return (
-        <div className={`bg-[#0C111D] p-5 rounded-xl border-1 border-white shadow-xl transition duration-300 hover:shadow-green-500/20 border border-gray-800 `}>
+        <div className={` p-5 rounded-xl border-1 border-white shadow-xl transition duration-300 hover:shadow-green-500/20  `}>
             
             {/* Top Section: Avatar, Name, Role, and Quick Action Icons */}
             <div className="flex items-center space-x-4 mb-3">

@@ -33,7 +33,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="flex flex-col w-80 bg-black border-1 border-gray-800 text-white h-screen overflow-y-auto py-5 px-3 shadow-lg custom-scrollbar">
+    <div className="flex flex-col w-60 bg-black border-1 border-gray-800 text-white h-screen overflow-y-auto py-5 px-3 shadow-lg custom-scrollbar">
       {/* Logo */}
       <div className="flex justify-center mb-8">
         <img
@@ -44,9 +44,9 @@ const Sidebar = () => {
       </div>
 
       {/* Profile */}
-      <div className="mb-8 p-3">
+      <div className=" p-3">
         <img
-          className="h-25 w-25 rounded-full mx-auto mb-3"
+          className="h-25 w-25 rounded-full mx-auto "
           src="/Profile.jpg"
           alt="Merry Adam"
         />
@@ -55,7 +55,7 @@ const Sidebar = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-grow mt-10 w-50 mx-auto">
+      <nav className="flex-grow mt-5 mb-25 ml-6 w-50 mx-auto">
         {menuItems.map((item) => (
           <NavLink
             key={item.name}

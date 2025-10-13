@@ -54,7 +54,7 @@ const Layout = () => {
             <Route path="/download" element={<DownloadPage />} />
             <Route path="/create-whiteboard" element={<CreateWhiteboard />} /> {/* ✅ */}
             <Route path="/new-document" element={<NewDocumentPage />} /> {/* ✅ */}
-            {/* <Route path="/new-test" element={<Test />} />  */}
+            <Route path="/new-test" element={<Test />} /> 
           </Routes>
         </main>
       </div>
