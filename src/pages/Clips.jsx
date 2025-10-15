@@ -189,10 +189,10 @@ const ClipsDashboard = () => {
 
                 {/* New Clip Button - Opens the modal */}
                 <button
-                    className="w-full md:w-auto bg-amber-600 hover:bg-amber-700 text-black font-bold py-2.5 px-6 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-amber-600"
+                    className="w-full md:w-auto bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 px-6 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-amber-600"
                     onClick={() => setIsModalOpen(true)}
                 >
-                    + New Clip
+                    New Clip
                 </button>
             </header>
 

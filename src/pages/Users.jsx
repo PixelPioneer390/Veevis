@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { Search, Menu, Plus, Phone, Mail, MessageCircle, Video, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Search, Menu, Plus, Phone, Mail, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Sample data to populate the cards
-const sampleContacts = Array.from({ length: 12 }, (_, i) => ({
+const sampleContacts = Array.from({ length: 160 }, (_, i) => ({
     id: i + 1,
-    name: "Lincoln Donin",
-    role: "Developer",
-    phone: "+12 345 6789 0",
-    email: "jamespress@veeives.com",
-    // Using a dynamic avatar source for variety
-    avatarUrl: `https://i.pravatar.cc/150?img=${10 + i}`,
+    name: `Contact ${i + 1}`,
+    role: i % 4 === 0 ? "Developer" : i % 4 === 1 ? "Designer" : i % 4 === 2 ? "Manager" : "Analyst",
+    phone: `+1 (555) ${100 + i}-${1000 + i}`,
+    email: `contact${i + 1}@example.com`,
+    avatarUrl: `https://i.pravatar.cc/150?img=${(i % 70) + 1}`,
 }));
+
+const itemsPerPage = 12;
 
 // Defines the background color used for the cards and input fields for visual consistency
 const CARD_BG = '#000000';
@@ -22,43 +23,42 @@ const APP_BG = 'bg-black';
  */
 const ContactCard = ({ contact }) => {
     return (
-        <div className={` p-5 rounded-xl border-1 border-white shadow-xl transition duration-300 hover:shadow-green-500/20  `}>
+        <div className={`p-5 rounded-xl bg-[#0C111D] border-1 border-gray-400 shadow-xl transition duration-300 hover:shadow-green-500/20`}>
             
             {/* Top Section: Avatar, Name, Role, and Quick Action Icons */}
             <div className="flex items-center space-x-4 mb-3">
-                
+               
                 {/* Avatar with Status Badge */}
                 <div className="relative">
                     <img
                         src={contact.avatarUrl}
                         alt={contact.name}
-                        className="w-14 h-14 rounded-full object-cover "
-                        onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/150x150/${CARD_BG.substring(1)}/white?text=LD`; }}
+                        className="w-14 h-14 rounded-full object-cover"
+                        onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/150x150/0C111D/white?text=LD`; }}
                     />
-                    {/* CRUCIAL FIX: Red status badge placed on the avatar, matching the image. */}
-                    <div className={`absolute bottom-0 right-0 w-4 h-4 bg-red-600 rounded-full border-2 border-[${CARD_BG}]`}></div>
+                    {/* Status badge */}
+                    <div className={`absolute bottom-0 right-0 w-4 h-4 bg-red-600 rounded-full border-2 border-[#0C111D]`}></div>
                 </div>
 
                 <div className="flex-1">
                     <h2 className="text-gray-50 text-lg font-semibold leading-tight">{contact.name}</h2>
                     <p className="text-gray-400 text-sm">{contact.role}</p>
                     
-                    {/* CRUCIAL ADDITION: Action Icons (Phone is green, others gray/hover green) */}
-                    <div className="flex items-center space-x-3 mt-2 ">
-                        <Phone size={16} className="text-white cursor-pointer" />
-                        <MessageCircle size={16} className="text-white cursor-pointer transition" />
-                        
+                    {/* Action Icons */}
+                    <div className="flex items-center space-x-3 mt-2">
+                        <Phone size={16} className="text-white cursor-pointer hover:text-green-500 transition-colors" />
+                        <MessageCircle size={16} className="text-white cursor-pointer hover:text-green-500 transition-colors" />
                     </div>
                 </div>
             </div>
-
+ 
             {/* Bottom Section: Contact Details List */}
-            <div className="space-y-3 pt-4  border-t-1 border-gray-800">
+            <div className="space-y-3 pt-4 border-t-1 border-gray-800">
                 
                 {/* Phone Detail */}
                 <div className="flex items-center space-x-3">
                     <div className="p-2 bg-[#7D9952] text-white rounded-full w-8 h-8 flex items-center justify-center">
-                        <Phone size={14} strokeWidth={2.5} fill='white' />
+                        <Phone size={14} strokeWidth={2.5} />
                     </div>
                     <span className="text-gray-200 text-sm font-medium">{contact.phone}</span>
                 </div>
@@ -78,7 +78,7 @@ const ContactCard = ({ contact }) => {
 /**
  * Renders the main header bar with search and action buttons.
  */
-const Header = () => {
+const Header = ({ searchTerm, onSearchChange }) => {
     return (
         <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 px-0 space-y-4 sm:space-y-0">
             {/* Search Bar */}
@@ -86,8 +86,9 @@ const Header = () => {
                 <input
                     type="text"
                     placeholder="Search here..........."
-                    // Uses CARD_BG for consistency with the image's dark input field
-                    className={`w-full h-10 bg-[${CARD_BG}] text-gray-300 rounded-lg p-3 pl-12 border border-gray-700 focus:ring-1 focus:ring-green-500 focus:border-green-500 transition-all duration-200`}
+                    value={searchTerm}
+                    onChange={(e) => onSearchChange(e.target.value)}
+                    className="w-full h-10 bg-black text-gray-300 rounded-lg p-3 pl-12 border border-gray-700 focus:ring-1 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
             </div>
@@ -101,7 +102,7 @@ const Header = () => {
                 </button>
 
                 {/* Menu Icon - Matches look on the right side of the image */}
-                <button className={`p-2 rounded-lg text-gray-400 hover:text-white hover:bg-[${CARD_BG}] transition duration-200`}>
+                <button className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition duration-200">
                     <Menu size={24} />
                 </button>
             </div>
@@ -114,17 +115,32 @@ const Header = () => {
  * @param {number} totalPages - Total number of pages.
  * @param {number} currentPage - The currently active page number.
  * @param {function} onPageChange - Handler for page change.
+ * @param {number} totalItems - Total number of items.
+ * @param {number} showingItems 
  */
-const Pagination = ({ totalPages, currentPage, onPageChange }) => {
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+const Pagination = ({ totalPages, currentPage, onPageChange, }) => {
+    const visiblePages = useMemo(() => {
+        const maxVisible = 4;
+        const pages = [];
+        let start = Math.max(1, currentPage - 1);
+        let end = Math.min(totalPages, start + maxVisible - 1);
+        
+        if (end - start < maxVisible - 1) {
+            start = Math.max(1, end - maxVisible + 1);
+        }
+        
+        for (let i = start; i <= end; i++) pages.push(i);
+        return pages;
+    }, [currentPage, totalPages]);
 
     return (
         <div className="flex items-center space-x-2">
-            {/* Previous Button - Matches the subtle, non-filled button style in the image */}
+            {/* Previous Button */}
             <button
-                className={`flex items-center space-x-1 px-3 py-1.5 rounded-lg text-sm font-medium transition duration-200 ${currentPage === 1
+                className={`flex items-center space-x-1 px-3 py-1.5 rounded-lg text-sm font-medium transition duration-200 ${
+                    currentPage === 1
                     ? 'text-gray-600 cursor-not-allowed'
-                    : 'text-gray-400 hover:text-white active:scale-95'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800 active:scale-95'
                 }`}
                 onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -134,14 +150,13 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
             </button>
 
             {/* Page Numbers */}
-            {pages.map(page => (
+            {visiblePages.map(page => (
                 <button
                     key={page}
-                    className={`w-9 h-9 rounded-lg text-sm font-extrabold transition duration-200 active:scale-95 ${page === currentPage
-                        // Active page: Orange background, white text, subtle shadow
+                    className={`w-9 h-9 rounded-lg text-sm font-extrabold transition duration-200 active:scale-95 ${
+                        page === currentPage
                         ? 'bg-orange-600 text-white shadow-md shadow-orange-600/40'
-                        // Inactive page: Dark background (like card/input), gray text
-                        : `bg-[${CARD_BG}] text-gray-300 hover:bg-gray-800`
+                        : 'bg-black text-gray-300 hover:bg-gray-800'
                     }`}
                     onClick={() => onPageChange(page)}
                 >
@@ -149,11 +164,12 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
                 </button>
             ))}
 
-            {/* Next Button - Matches the subtle, non-filled button style in the image */}
+            {/* Next Button */}
             <button
-                className={`flex items-center space-x-1 px-3 py-1.5 rounded-lg text-sm font-medium transition duration-200 ${currentPage === totalPages
+                className={`flex items-center space-x-1 px-3 py-1.5 rounded-lg text-sm font-medium transition duration-200 ${
+                    currentPage === totalPages
                     ? 'text-gray-600 cursor-not-allowed'
-                    : 'text-gray-400 hover:text-white active:scale-95'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800 active:scale-95'
                 }`}
                 onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
@@ -168,41 +184,83 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
 // Main App Component
 const App = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 4; // Based on the image showing pages 1-4
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // Simple function to handle page change
+    // Filter contacts based on search term
+    const filteredContacts = useMemo(() => {
+        if (!searchTerm.trim()) return sampleContacts;
+        
+        const term = searchTerm.toLowerCase();
+        return sampleContacts.filter(contact =>
+            contact.name.toLowerCase().includes(term) ||
+            contact.role.toLowerCase().includes(term) ||
+            contact.email.toLowerCase().includes(term) ||
+            contact.phone.includes(term)
+        );
+    }, [searchTerm]);
+
+    // Calculate pagination
+    const totalItems = filteredContacts.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    // Get current page data
+    const currentContacts = useMemo(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return filteredContacts.slice(startIndex, endIndex);
+    }, [currentPage, filteredContacts]);
+
+    // Reset to page 1 when search changes
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
     return (
-        // The main container sets the dark page background and ensures full height
         <div className={`${APP_BG} min-h-screen text-white p-4 sm:p-6 font-sans`}>
             <div className="max-w-7xl mx-auto">
                 
                 {/* Top Header */}
-                <Header />
+                <Header searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-                {/* Contact Grid - Highly responsive layout */}
+                {/* Contact Grid */}
                 <main className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {sampleContacts.map(contact => (
-                        <ContactCard key={contact.id} contact={contact} />
-                    ))}
+                    {currentContacts.length > 0 ? (
+                        currentContacts.map(contact => (
+                            <ContactCard key={contact.id} contact={contact} />
+                        ))
+                    ) : (
+                        <div className="col-span-full text-center py-12">
+                            <p className="text-gray-400 text-lg">No contacts found matching your search.</p>
+                        </div>
+                    )}
                 </main>
 
                 {/* Footer Area with Data Summary and Pagination */}
                 <div className="flex flex-col sm:flex-row justify-between items-center mt-8">
-                    {/* Data Summary Text - CRUCIAL ADDITION: Matches "Showing X from Y data" text */}
+                    {/* Data Summary Text */}
                     <p className="text-gray-400 text-sm mb-4 sm:mb-0">
-                        Showing 12 from 160 data
+                        Showing {currentContacts.length} from {totalItems} data
+                        {searchTerm && (
+                            <span className="text-orange-400 ml-1">
+                                (filtered from {sampleContacts.length} total)
+                            </span>
+                        )}
                     </p>
 
-                    {/* Pagination Controls */}
-                    <Pagination
-                        totalPages={totalPages}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                    />
+                    {/* Pagination Controls - Only show if there are pages */}
+                    {totalPages > 0 && (
+                        <Pagination
+                            totalPages={totalPages}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
+                            totalItems={totalItems}
+                            showingItems={currentContacts.length}
+                        />
+                    )}
                 </div>
             </div>
         </div>

@@ -122,7 +122,6 @@ function HomePage() {
               ))}
             </div>
             <div className="flex items-center text-sm mt-4 md:mt-0">
-              <span className="mr-2 text-gray-400">Sort:</span>
               <button className="flex items-center text-white hover:text-gray-300 transition duration-150 font-medium">
                 Sort <ChevronDown className="ml-1 text-gray-400" />
               </button>

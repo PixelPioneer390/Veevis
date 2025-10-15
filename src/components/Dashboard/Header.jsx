@@ -3,7 +3,7 @@ import { Search, Bell, Grid, Settings, SquarePlus, Timer, MessageCircleMore, Not
 
 const Header = () => {
   return (
-    <header className="flex items-center lg:w-[95%] w-full mx-auto justify-between px-6 py-8">
+    <header className="flex items-center lg:w-7xl w-full mx-auto justify-between px-6 py-8">
       <div className="flex items-center">
         <h1 className="text-4xl font-bold text-white mr-8">Hello, Admin</h1>
         <div className="relative">

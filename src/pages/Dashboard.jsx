@@ -7,7 +7,7 @@ const Dashboard = () => {
   
 
   return (
-    <div className="flex h-screen font-sans ">
+    <div className="flex w-7xl mx-auto h-screen font-sans ">
         <main className="p-5 w-full space-y-8">
           {/* Hero Section */}
           <div className="flex justify-between items-center">

@@ -1,3 +1,4 @@
+import { ChevronLeft } from "lucide-react";
 import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ Import navigation hook
 
@@ -86,7 +87,7 @@ const ActionProgress = ({ progress }) => {
   return (
     <div className="flex flex-col space-y-1">
       <span className={`text-[10px] font-bold uppercase ${statusColor} tracking-wide`}>{statusText}</span>
-      <div className="flex h-1.5 w-full rounded-full overflow-hidden bg-gray-800">
+      <div className="flex h-1.5 w-full rounded-full overflow-hidden ">
         <div className="bg-green-500 transition-all duration-500" style={{ width: `${complete}%` }}></div>
         {progress < 100 && (
           <div className="bg-red-600 transition-all duration-500" style={{ width: `${100 - complete}%` }}></div>
@@ -97,32 +98,40 @@ const ActionProgress = ({ progress }) => {
 };
 
 // --- Top Header ---
-const TopHeader = () => (
-  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-0 pb-4">
-    <div className="flex items-end mb-4 sm:mb-0">
-      <h1 className="text-3xl font-bold text-white">Export</h1>
-    </div>
-    <div className="flex items-center space-x-3 w-full sm:w-auto">
-      <div className="relative flex-grow sm:flex-grow-0 sm:w-64">
-        <input
-          type="search"
-          placeholder="Search"
-          className="pl-10 pr-4 py-2 w-full bg-[#1c1c1c] border border-gray-700 text-gray-300 rounded-xl focus:ring-1 focus:ring-orange-500 outline-none placeholder-gray-500 transition duration-150 ease-in-out shadow-inner"
-        />
-        <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+const TopHeader = () => {
+  const navigate = useNavigate(); // ✅ initialize navigation
+
+  return (
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-0 pb-4">
+      <div 
+        className="flex items-center mb-4 text-[#DE8B2D] sm:mb-0 cursor-pointer"
+        onClick={() => navigate('/leads')} // ✅ navigate to leads page on click
+      >
+        <ChevronLeft className="text-3xl" strokeWidth={4}/>
+        <h1 className="text-3xl font-bold">Export</h1>
       </div>
-      {[FilterIcon, ColumnsIcon, SettingsIcon].map((Icon, i) => (
-        <button
-          key={i}
-          className="p-2 rounded-xl bg-[#1c1c1c] text-gray-400 hover:text-white hover:bg-[#333333] transition shadow-md border border-gray-700 hidden sm:block"
-          title={i === 0 ? "Filter" : i === 1 ? "Layout" : "Settings"}
-        >
-          <Icon className="w-5 h-5" />
-        </button>
-      ))}
+      <div className="flex items-center space-x-3 w-full sm:w-auto">
+        <div className="relative flex-grow sm:flex-grow-0 sm:w-64">
+          <input
+            type="search"
+            placeholder="Search"
+            className="pl-10 pr-4 py-2 w-full  border border-gray-700 text-gray-300 rounded-xl focus:ring-1 focus:ring-orange-500 outline-none placeholder-gray-500 transition duration-150 ease-in-out shadow-inner"
+          />
+          <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+        </div>
+        {[FilterIcon, ColumnsIcon, SettingsIcon].map((Icon, i) => (
+          <button
+            key={i}
+            className="p-2 rounded-xl  text-gray-400 hover:text-white hover:bg-[#333333] transition shadow-md border border-gray-700 hidden sm:block"
+            title={i === 0 ? "Filter" : i === 1 ? "Layout" : "Settings"}
+          >
+            <Icon className="w-5 h-5" />
+          </button>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // --- Data Table ---
 const DataTable = ({ data }) => {
@@ -132,13 +141,13 @@ const DataTable = ({ data }) => {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-900 shadow-xl">
       <table className="min-w-full table-auto text-sm text-gray-400">
-        <thead className="text-xs uppercase bg-black/50">
+        <thead className="text-xs uppercase ">
           <tr>
             {headers.map((header, i) => (
               <th key={i} className="px-4 py-3 font-medium text-left text-gray-500 whitespace-nowrap border-b border-gray-900">
                 {header}
                 {i === 0 && (
-                  <span className="ml-2 px-1 py-0.5 text-xs bg-gray-800 text-gray-400 rounded-md">
+                  <span className="ml-2 px-1 py-0.5 text-xs  text-gray-400 rounded-md">
                     {data.length}
                   </span>
                 )}
@@ -178,7 +187,7 @@ const Pagination = ({ dataPerPage, currentPage, setCurrentPage }) => {
   const visiblePages = Array.from({ length: Math.min(4, totalPages) }, (_, i) => i + 1);
 
   return (
-    <div className="sticky bottom-0 z-10 px-4 py-4 flex flex-col md:flex-row items-center justify-between text-white border-t border-gray-900 bg-[#0b0b0b]">
+    <div className="sticky bottom-0 z-10 px-4 py-4 flex flex-col md:flex-row items-center justify-between text-white border-t border-gray-900 bg-black">
       <span className="text-sm text-gray-400 mb-4 md:mb-0">
         Showing 10 from {totalDisplay} data
       </span>
@@ -186,7 +195,7 @@ const Pagination = ({ dataPerPage, currentPage, setCurrentPage }) => {
         <button
           onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 text-sm rounded-xl bg-[#1c1c1c] text-gray-300 hover:bg-[#333333] disabled:opacity-50 transition border border-gray-700"
+          className="px-4 py-2 text-sm rounded-xl  text-gray-300 hover:bg-[#333333] disabled:opacity-50 transition border border-gray-700"
         >
           Previous
         </button>
@@ -207,7 +216,7 @@ const Pagination = ({ dataPerPage, currentPage, setCurrentPage }) => {
         <button
           onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage >= totalPages}
-          className="px-4 py-2 text-sm rounded-xl bg-[#1c1c1c] text-gray-300 hover:bg-[#333333] border border-gray-700 disabled:opacity-50 transition"
+          className="px-4 py-2 text-sm rounded-xl  text-gray-300 hover:bg-[#333333] border border-gray-700 disabled:opacity-50 transition"
         >
           Next
         </button>
@@ -233,7 +242,7 @@ const App = () => {
   }, [currentPage, startIndex, MOCK_DATA_LENGTH]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0b0b0b] font-sans">
+    <div className="min-h-screen flex flex-col bg-black font-sans">
       <style jsx="true">{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         .font-sans {

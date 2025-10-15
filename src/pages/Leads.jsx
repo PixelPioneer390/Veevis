@@ -95,7 +95,7 @@ const App = () => {
           <div className="flex space-x-3">
             {/* Back Button */}
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/")}
               className="px-6 py-2 text-sm font-medium rounded-full border border-gray-700 text-white hover:bg-gray-800 transition duration-150 shadow-lg"
             >
               Back to Dashboard

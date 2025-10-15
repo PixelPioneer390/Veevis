@@ -10,16 +10,16 @@ const TailwindScript = () => (
 const mockTickets = [
     { id: 1, date: '12-08-2025', subject: 'Password Reset', client: 'Adeel Ali', priority: 'High', activity: '20 minutes ago', status: 'Answered' },
     { id: 2, date: '12-08-2025', subject: 'Password Reset', client: 'Adeel Ali', priority: 'Low', activity: '20 minutes ago', status: 'On Hold' },
-    { id: 3, date: 3, subject: 'Network Latency', client: 'Faisal Khan', priority: 'Normal', activity: '45 minutes ago', status: 'Closed' },
-    { id: 4, date: 4, subject: 'Software License', client: 'Sara Malik', priority: 'High', activity: '1 hour ago', status: 'Open' },
-    { id: 5, date: 5, subject: 'Email Configuration', client: 'Adeel Ali', priority: 'High', activity: '2 hours ago', status: 'Answered' },
-    { id: 6, date: 6, subject: 'VPN Connection', client: 'Ahmed Raza', priority: 'Low', activity: '3 hours ago', status: 'On Hold' },
-    { id: 7, date: 7, subject: 'Monitor Flickering', client: 'Zainab Qureshi', priority: 'Normal', activity: '1 day ago', status: 'Closed' },
-    { id: 8, date: 8, subject: 'Server Maintenance', client: 'Adeel Ali', priority: 'High', activity: '2 days ago', status: 'Open' },
-    { id: 9, date: 9, subject: 'Cloud Storage Error', client: 'Hassan Iqbal', priority: 'High', activity: '3 days ago', status: 'Answered' },
-    { id: 10, date: 10, subject: 'New User Onboarding', client: 'Aisha Jamil', priority: 'Low', activity: '4 days ago', status: 'On Hold' },
-    { id: 11, date: 11, subject: 'Database Access Issue', client: 'Jane Doe', priority: 'Normal', activity: '5 days ago', status: 'Closed' },
-    { id: 12, date: 12, subject: 'Software Install', client: 'John Smith', priority: 'High', activity: '6 days ago', status: 'Open' },
+    { id: 3, date: '12-08-2025', subject: 'Network Latency', client: 'Faisal Khan', priority: 'Normal', activity: '45 minutes ago', status: 'Closed' },
+    { id: 4, date: '12-08-2025', subject: 'Software License', client: 'Sara Malik', priority: 'High', activity: '1 hour ago', status: 'Open' },
+    { id: 5, date: '12-08-2025', subject: 'Email Configuration', client: 'Adeel Ali', priority: 'High', activity: '2 hours ago', status: 'Answered' },
+    { id: 6, date: '12-08-2025', subject: 'VPN Connection', client: 'Ahmed Raza', priority: 'Low', activity: '3 hours ago', status: 'On Hold' },
+    { id: 7, date: '12-08-2025', subject: 'Monitor Flickering', client: 'Zainab Qureshi', priority: 'Normal', activity: '1 day ago', status: 'Closed' },
+    { id: 8, date: '12-08-2025', subject: 'Server Maintenance', client: 'Adeel Ali', priority: 'High', activity: '2 days ago', status: 'Open' },
+    { id: 9, date: '12-08-2025', subject: 'Cloud Storage Error', client: 'Hassan Iqbal', priority: 'High', activity: '3 days ago', status: 'Answered' },
+    { id: 10, date: '12-08-2025', subject: 'New User Onboarding', client: 'Aisha Jamil', priority: 'Low', activity: '4 days ago', status: 'On Hold' },
+    { id: 11, date: '12-08-2025', subject: 'Database Access Issue', client: 'Jane Doe', priority: 'Normal', activity: '5 days ago', status: 'Closed' },
+    { id: 12, date: '12-08-2025', subject: 'Software Install', client: 'John Smith', priority: 'High', activity: '6 days ago', status: 'Open' },
 ];
 
 const totalTickets = 180;
